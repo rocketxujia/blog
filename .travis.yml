@@ -27,7 +27,7 @@ install:
 script:
 - hexo clean
 - hexo generate
-- mv 
+- cp ./CNAME public/CNAME
 after_success:
 - cd ./public
 - git init
