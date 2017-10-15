@@ -1,0 +1,599 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="react,setState asynchronous" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一、setState 异步性官方文档描述根据 官方文档 state-and-lifecycle，有下面这段话： 123State Updates May Be AsynchronousReact may batch multiple setState() calls into a single update for performance.Because this.props and this.s">
+<meta name="keywords" content="react,setState asynchronous">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解 setState 更新异步性">
+<meta property="og:url" content="http://blog.xjsxj.cn/react/react-2017-03-states-asyn/index.html">
+<meta property="og:site_name" content="两个XJ之家">
+<meta property="og:description" content="一、setState 异步性官方文档描述根据 官方文档 state-and-lifecycle，有下面这段话： 123State Updates May Be AsynchronousReact may batch multiple setState() calls into a single update for performance.Because this.props and this.s">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-05-01T23:18:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解 setState 更新异步性">
+<meta name="twitter:description" content="一、setState 异步性官方文档描述根据 官方文档 state-and-lifecycle，有下面这段话： 123State Updates May Be AsynchronousReact may batch multiple setState() calls into a single update for performance.Because this.props and this.s">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://blog.xjsxj.cn/react/react-2017-03-states-asyn/"/>
+
+  <script type='text/javascript'>window._ty_rum&&window._ty_rum.server||function(t){function r(t){switch(typeof t){case"object":if(!t)return"null";if(t instanceof Array){for(var e="[",n=0;n<t.length;n++)e+=(n>0?",":"")+r(t[n]);return e+"]"}var e="{",n=0;for(var a in t)if("function"!=typeof t[a]){var o=r(t[a]);e+=(n>0?",":"")+r(a)+":"+o,n++}return e+"}";case"string":return'"'+t.replace(/([\"\\])/g,"\\$1").replace(/\n/g,"\\n")+'"';case"number":return t.toString();case"boolean":return t?"true":"false";case"function":return r(t.toString());case"undefined":default:return'"undefined"'}}function e(t){return O?O(t):t}function n(){return Date.now?Date.now():(new Date).valueOf()}function a(t,r,e){function n(){var t=N.args.apply(this,arguments);return r(o,t,e)}var a,o=t[t.length-1];if("function"==typeof o){switch(o.length){case 0:a=function(){return n.apply(this,arguments)};break;case 1:a=function(t){return n.apply(this,arguments)};break;case 2:a=function(t,r){return n.apply(this,arguments)};break;case 3:a=function(t,r,e){return n.apply(this,arguments)};break;case 4:a=function(t,r,e,a){return n.apply(this,arguments)};break;case 5:a=function(t,r,e,a,o){return n.apply(this,arguments)};break;default:for(var i=[],s=0,u=o.length;s<u;s++)i.push("_"+s);a=eval("(function(){return function("+i.join(",")+"){var args = [].slice.call(arguments, 0);return r(o, args, e);};})();")}t[t.length-1]=a}return t}function o(t,r){return t&&r&&(t.moduleName=r),t}function i(t,r,e){return function(){try{E=r,e&&s(r),t.apply(this,arguments),e&&u()}catch(n){throw e&&u(),o(n,r)}}}function s(r){N.each(["setTimeout","setInterval"],function(e){N.wrap(!0,t,e,function(t){return function(){var e,n=N.args.apply(this,arguments),a=n[0];return"function"==typeof a&&(e=i(a,r,!0)),e&&(n[0]=e),t.apply?t.apply(this,n):Function.prototype.apply.apply(t,[t,n])}})})}function u(){N.each(["setTimeout","setInterval"],function(r){N.unwrap(t,r)})}function c(t){P&&N.wrap(!1,P.prototype,"addEventListener",function(r){return function(){var e,n=N.args.apply(this,arguments),a=n[1];return"function"==typeof a&&(e=i(a,t,!0)),e&&(n[1]=e),r.apply(this,n)}}),s(t)}function f(){P&&N.unwrap(P.prototype,"addEventListener"),u()}function l(t){return function(t,r){}}function p(){if(this.errors.length){var t=function(t){var r=[],e={};N.each(t,function(t){var r=_(t[1],t[2],t[3],t[6]);e[r]?e[r][4]+=1:e[r]=[t[1],t[2],t[3],"#"==t[4]?x.URL:t[4],1,t[5],t[6],t[7]]});for(var n in e)r.push(e[n]);return r}(this.errors),r=this;N.POST(N.mkurl(D.server.beacon,"err",{fu:q?q:q++,os:parseInt((n()-(B||D.st))/1e3)}),N.stringify({datas:t}),{},function(t,e){t||(r.errors=[])})}}function d(){j.initend()}function h(){"complete"===x.readyState&&j.initend()}function y(t){function r(){j.send()}return!!D.load_time||(j.initend(),D.load_time=n(),void(9===t?r():setTimeout(r,0)))}function m(){z||y(9),N.bind(p,j)(),z=1}function v(){j.touch||(j.touch=n())}function g(t){if(t[6]){var r=t[4],e=t[5];if(e&&"string"==typeof e&&r){e=e.split(/\n/);var n=C.exec(e[0]);n||(n=C.exec(e[1])),n&&n[1]!=r&&(t[4]=n[1]||r,t[2]=n[2]||t[2],t[3]=n[3]||t[3])}}}function _(t,r,e,n){return t+r+e+(n?n:"")}function w(r){var e=arguments,a="unknown",o=[n()];if(0!=e.length){if("string"==typeof r){var i=e.length<4?e.length:4;o[1]=e[0],i>2&&(o[2]=e[2],o[3]=0,o[4]=e[1]),i>3&&e[3]&&(o[3]=e[3])}else if(r instanceof Event||t.ErrorEvent&&r instanceof ErrorEvent){if(o[1]=r.message||(r.error&&r.error.constructor.name)+(r.error&&r.error.message)||"",o[2]=r.lineno?r.lineno:0,o[3]=r.colno?r.colno:0,o[4]=r.filename||r.error&&r.error.fileName||r.target&&r.target.baseURI||"",!o[4]&&M)return;o[4]==x.URL&&(o[4]="#"),r.error?(o[5]=r.error.stack,o[6]=r.error.moduleName):(o[5]=null,o[6]=null);var s=_(o[1],o[2],o[3],o[6]);if(o[7]=J[s]?0:1,J[s]=!0,o[1]===a&&o[4]===a)return;g(o)}j.errors.push(o)}}function S(t){return function(){var r=arguments;if(!this._ty_wrap){var e=N.args.apply(this,r);this._ty_rum={method:e[0],url:e[1],start:n()}}try{return t.apply(this,r)}catch(a){return Function.prototype.apply.call(t,this,r)}}}function T(r){return"string"==typeof r?r.length:t.ArrayBuffer&&r instanceof ArrayBuffer?r.byteLength:t.Blob&&r instanceof Blob?r.size:r&&r.length?r.length:0}function b(r){return function(){function e(t){var r,e,a=p._ty_rum;if(a){if(4!==a.readyState&&(a.end=n()),a.s=p.status,""==p.responseType||"text"==p.responseType)a.res=T(p.responseText);else if(p.response)a.res=T(p.response);else try{a.res=T(p.responseText)}catch(o){a.res=0}if(a.readyState=p.readyState,a.cb_time=d,r=[a.method+" "+a.url,a.s>0?a.end-a.start:0,d,a.s,a.s>0?0:t,a.res,a.req],a.r&&(e=i(p),e&&(e=e.xData)&&(r.push(e.id),r.push(e.action),r.push(e.time&&e.time.duration),r.push(e.time&&e.time.qu))),D.aa.push(r),D.server.custom_urls&&D.server.custom_urls.length&&!j.ct){if(!D.pattern){D.pattern=[];for(var s=0;s<D.server.custom_urls.length;s++)D.pattern.push(new RegExp(D.server.custom_urls[s]))}for(var s=0;s<D.pattern.length;s++)if(a.url.match(D.pattern[s])){j.ct=a.end+d;break}}j.sa(),p._ty_rum=null}}function a(){4==p.readyState&&e(0)}function i(r){var e;if(r.getResponseHeader){var n=N.parseJSON(r.getResponseHeader("X-Tingyun-Tx-Data"));n&&n.r&&r._ty_rum&&n.r+""==r._ty_rum.r+""&&(e={name:r._ty_rum.url,xData:n},X&&t._ty_rum.c_ra.push(e))}return e}function c(t){return function(){var r,e;4==p.readyState&&p._ty_rum&&(p._ty_rum.end=r=n(),p._ty_rum.readyState=4);try{E&&s(E),e=t.apply(this,arguments),E&&u()}catch(i){throw i=o(i,E),E&&u(),E=null,i}return 4==p.readyState&&(d=n()-r),a(),e}}function f(t){return function(){var r=p._ty_rum;return!r||("progress"==t||("abort"==t?e(905):"loadstart"==t?r.start=n():"error"==t?e(990):"timeout"==t&&e(903),!0))}}function l(t,r){r instanceof Array||(r=[r]);for(var e=0;e<r.length;e++){var n=r[e];N.sh(t,n,f(n),!1)}}if(!this._ty_wrap){this._ty_rum.start=n(),this._ty_rum.req=arguments[0]?T(arguments[0]):0;var p=this,d=0,h=N.wrap(!1,this,"onreadystatechange",c);h||N.sh(this,"readystatechange",a,!1),l(this,["error","progress","abort","load","loadstart","loadend","timeout"]),h||setTimeout(function(){N.wrap(!1,p,"onreadystatechange",c)},0)}var y=function(){function t(t){var r={},e=/^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?/.exec(t);return e&&(r.protocol=e[1]?e[1]+":":"http:",r.hostname=e[3],r.port=e[4]||""),r}return function(r){var e=location;if(r=N.trim(r)){if(r=r.toLowerCase(),r.startsWith("//")&&(r=e.protocol+r),!r.startsWith("http"))return!0;var n=t(r),a=n.protocol===e.protocol&&n.hostname===e.hostname;return a&&(a=n.port===e.port||!e.port&&("http:"===e.protocol&&"80"===n.port||"https:"===e.protocol&&"443"===n.port)),a}return!1}}(),m=arguments;try{var v=D.server;v&&v.id&&this._ty_rum&&y(this._ty_rum.url)&&(this._ty_rum.r=(new Date).getTime()%1e8,this.setRequestHeader&&this.setRequestHeader("X-Tingyun-Id",v.id+";r="+this._ty_rum.r))}catch(g){}try{return r.apply(this,m)}catch(_){return Function.prototype.apply.call(r,this,m)}}}var E,k=t.XMLHttpRequest,x=document,R=Object.defineProperty,L=t.define,P=t.EventTarget,q=0,C=new RegExp("([a-z]+:/{2,3}.*):(\\d+):(\\d+)"),O=t.encodeURIComponent,B=null,N={wrap:function(t,r,e,n,a){try{var o=r[e]}catch(i){if(!t)return!1}if(!o&&!t)return!1;if(o&&o._ty_wrap)return!1;try{r[e]=n(o,a)}catch(i){return!1}return r[e]._ty_wrap=[o],!0},unwrap:function(t,r){try{var e=t[r]._ty_wrap;e&&(t[r]=e[0])}catch(n){}},each:function(t,r){if(t){var e;for(e=0;e<t.length&&(!t[e]||!r(t[e],e,t));e+=1);}},mkurl:function(r,a){var o=arguments,i=/^https/i.test(x.URL)?"https":"http";if(i=i+"://"+r+"/"+a+"?av=1.3.3&v=1.3.2&key="+e(D.server.key)+"&ref="+e(x.URL)+"&rand="+n()+"&pvid="+H,"pf"!==a&&D&&(D.agent=D.agent||t._ty_rum.agent,D.agent&&D.agent.n&&(i+="&n="+e(D.agent.n))),o.length>2){var s=o[2];for(var u in s)i+="&"+u+"="+s[u]}return A.host&&(i+="&cshst="+e(A.host)),A.url&&(i+="&csurl="+e(A.url)),i},GET:function(t,r){function e(){r&&r.apply(this,arguments),n.parentNode&&n.parentNode.removeChild(n)}if(navigator&&navigator.sendBeacon&&F.test(t))return navigator.sendBeacon(t,null);var n=x.createElement("img");return n.setAttribute("src",t),n.setAttribute("style","display:none"),this.sh(n,"readystatechange",function(){"loaded"!=n.readyState&&4!=n.readyState||e("loaded")},!1),this.sh(n,"load",function(){return e("load"),!0},!1),this.sh(n,"error",function(){return e("error"),!0},!1),x.body.appendChild(n)},fpt:function(t,r,e){function n(t,r,e){var n=x.createElement(t);try{for(var a in r)n[a]=r[a]}catch(o){var i="<"+t;for(var a in r)i+=" "+a+'="'+r[a]+'"';i+=">",e||(i+="</"+t+">"),n=x.createElement(i)}return n}var a=n("div",{style:"display:none"},!1),o=n("iframe",{name:"_ty_rum_frm",width:0,height:0,style:"display:none"},!1),i=n("form",{style:"display:none",action:t,enctype:"application/x-www-form-urlencoded",method:"post",target:"_ty_rum_frm"},!1),s=n("input",{name:"data",type:"hidden"},!0);return s.value=r,i.appendChild(s),a.appendChild(o),a.appendChild(i),x.body.appendChild(a),i.submit(),o.onreadystatechange=function(){"complete"!==o.readyState&&4!==o.readyState||(e(null,o.innerHTML),x.body.removeChild(a))},!0},POST:function(r,e,n,a){if(this.ie)return this.fpt(r,e,a);if(navigator&&navigator.sendBeacon&&F.test(r)){var o=navigator.sendBeacon(r,e);return a(!o),o}var i;if(t.XDomainRequest)return i=new XDomainRequest,i.open("POST",r),i.onload=function(){a(null,i.responseText)},this.sh(i,"load",function(){a(null,i.responseText)},!1),this.sh(i,"error",function(){a("POST("+r+")error")},!1),this.wrap(!0,i,"onerror",function(t){return function(){return a&&a("post error",i.responseText),!0}}),i.send(e),!0;if(!k)return!1;i=new k,i.overrideMimeType&&i.overrideMimeType("text/html");try{i._ty_wrap=1}catch(s){}var u=0;i.onreadystatechange=function(){4==i.readyState&&200==i.status&&(0==u&&a(null,i.responseText),u++)},i.onerror&&this.wrap(!0,i,"onerror",function(t){return function(){return a("post error",i.responseText),"function"!=typeof t||t.apply(this,arguments)}});try{i.open("POST",r,!0)}catch(s){return this.fpt(r,e,a)}for(var c in n)i.setRequestHeader(c,n[c]);return i.send(e),!0},sh:function(t,r,e,n){return t.addEventListener?t.addEventListener(r,e,n):!!t.attachEvent&&t.attachEvent("on"+r,e)},args:function(){for(var t=[],r=0;r<arguments.length;r++)t.push(arguments[r]);return t},stringify:r,parseJSON:function(r){if(r&&"string"==typeof r){var e=t.JSON?t.JSON.parse:function(t){return new Function("return "+t)()};return e(r)}return null},trim:$?function(t){return null==t?"":$.call(t)}:function(t){return null==t?"":t.toString().replace(/^\s+/,"").replace(/\s+$/,"")},extend:function(t,r){if(t&&r)for(var e in r)r.hasOwnProperty(e)&&(t[e]=r[e]);return t},bind:function(t,r){return function(){t.apply(r,arguments)}}},A={},D=t._ty_rum=N.extend({st:n(),ra:[],c_ra:[],aa:[],snd_du:function(){return this.server.adu?1e3*this.server.adu:1e4},cc:function(){return this.server.ac?this.server.ac:10},config:function(t,r){var e;if("object"==typeof t)e=t;else{if("string"!=typeof t||void 0===r)throw new Error("illegal arguments");e={},e[t]=r}for(var n in e)A[n]=e[n];return this}},t._ty_rum||{});var ty_rum=D;ty_rum.server = {id:'SWeokUJ9jk0',ignore_err : true,beacon:'beacon.tingyun.com',beacon_err:'beacon-err.tingyun.com',key:'uP2n6U22LWQ',trace_threshold:7000,custom_urls:[],sr:1.0};if(D.server&&!(D.server.sr&&Math.random()>=D.server.sr)){var I="ignore_err",M=!(I in D.server)||D.server[I],$=String.prototype.trim;String.prototype.startsWith||(String.prototype.startsWith=function(t,r){return r=r||0,this.indexOf(t,r)===r});var F=/^http/i,H=function(){function t(){return(65536*(1+Math.random())|0).toString(16).substring(1)}return t()+"-"+t()+t()}();try{R&&R(t,"define",{get:function(){return L},set:function(t){"function"==typeof t&&(t.amd||t.cmd)?(L=function(){var r=N.args.apply(this,arguments);if(3!==r.length)return t.apply(this,r);var e="string"==typeof r[0]?r[0]:"anonymous";return t.apply(this,a(r,function(t,r,e){var n;try{E=e,c(e),n=t.apply(this,r),f()}catch(a){throw f(),o(a,e)}return n},e))},N.extend(L,t)):L=t},configurable:!0})}catch(U){}var X=t.performance?t.performance:t.Performance;X&&(N.sh(X,"resourcetimingbufferfull",function(){var t=X.getEntriesByType("resource");t&&(D.ra=D.ra.concat(t),X.clearResourceTimings())},!1),N.sh(X,"webkitresourcetimingbufferfull",function(){var t=X.getEntriesByType("resource");t&&(D.ra=D.ra.concat(t),X.webkitClearResourceTimings())},!1));for(var j=D.metric={ready:function(){return D.load_time},initend:function(){function t(){j.sa()}D.end_time||(D.end_time=n(),this._h=setInterval(t,2e3))},send:function(){function r(){function r(t){return a[t]>0?a[t]-i:0}var n={};if(X&&X.timing){var a=X.timing;i=a.navigationStart;var o=r("domainLookupStart"),s=r("domainLookupEnd"),u=r("redirectStart"),c=r("redirectEnd"),f=r("connectStart"),l=r("connectEnd");n={f:r("fetchStart"),qs:r("requestStart"),rs:r("responseStart"),re:r("responseEnd"),os:r("domContentLoadedEventStart"),oe:r("domContentLoadedEventEnd"),oi:r("domInteractive"),oc:r("domComplete"),ls:r("loadEventStart"),le:r("loadEventEnd"),tus:r("unloadEventStart"),tue:r("unloadEventEnd")},l-f>0&&(n.cs=f,n.ce=l),s-o>0&&(n.ds=o,n.de=s),(c-u>0||c>0)&&(n.es=u,n.ee=c),0==n.le&&(n.ue=D.load_time-i);var p;if(a.msFirstPaint)p=a.msFirstPaint;else if(t.chrome&&chrome.loadTimes){var d=chrome.loadTimes();d&&d.firstPaintTime&&(p=1e3*d.firstPaintTime)}else D.firstPaint&&(p=D.firstPaint);p&&(n.fp=Math.round(p-i)),a.secureConnectionStart&&(n.sl=r("secureConnectionStart"))}else n={t:i,os:D.end_time-i,ls:D.load_time-i};n.je=j.errors.length,j.ct&&(n.ct=j.ct-i),j.touch&&(n.fi=j.touch-i);var h=D.agent||t._ty_rum&&t._ty_rum.agent;return h&&(n.id=e(h.id),n.a=h.a,n.q=h.q,n.tid=e(h.tid),n.n=e(h.n)),n.sh=t.screen&&t.screen.height,n.sw=t.screen&&t.screen.width,n}function a(r){var e=t._ty_rum.c_ra;if(r)for(var n=e.length-1;n>=0;n--)if(r.indexOf(e[n].name)>-1)return e[n].xData;return null}function o(t){function r(t){return f[t]>0?f[t]:0}if(t<D.server.trace_threshold)return null;var n=X;if(n&&n.getEntriesByType){var o={tr:!0,tt:e(x.title),charset:x.characterSet},s=D.ra,u=n.getEntriesByType("resource");u&&(s=s.concat(u),n.webkitClearResourceTimings&&n.webkitClearResourceTimings(),n.clearResourceTimings&&n.clearResourceTimings()),o.res=[];for(var c=0;c<s.length;c++){var f=s[c],l={o:r("startTime"),rt:f.initiatorType,n:f.name,f:r("fetchStart"),ds:r("domainLookupStart"),de:r("domainLookupEnd"),cs:r("connectStart"),ce:r("connectEnd"),sl:r("secureConnectionStart"),qs:r("requestStart"),rs:r("responseStart"),re:r("responseEnd")},p=a(f.name);p&&(l.aid=p.id,l.atd=p.trId,l.an=p.action,l.aq=p.time&&p.time.qu,l.as=p.time&&p.time.duration),o.res.push(l)}if(j.errors.length){o.err=[];for(var c=0,d=j.errors,h=d.length;c<h;c++)o.err.push({o:Math.round(d[c][0]-i),e:d[c][1]&&d[c][1].replace(/([\"\\])/g,"\\$1").replace(/\n/g,"\\n"),l:d[c][2],c:d[c][3],r:d[c][4],ec:h,s:d[c][5],m:d[c][6],ep:d[c][7]})}return o}return null}if(this.sended)return!1;if(!this.ready())return!1;var i=D.st,s={};try{var u=r();s=o(u.ls>0?u.ls:D.load_time-i)}catch(c){}s=s?N.stringify(s):"";var f=N.mkurl(D.server.beacon,"pf",u);B=n(),0!=s.length&&N.POST(f,s,{},l("POST"))||N.GET(f);var d=N.bind(p,this);return d(),setInterval(d,1e4),this.sended=!0,this.sa(1),!0},sa:function(t){(this.ready()||t)&&(t||(t=!this._last_send||n()-this._last_send>D.snd_du()||D.aa.length>=D.cc()),D.aa.length>0&&t&&(this._last_send=n(),N.POST(N.mkurl(D.server.beacon,"xhr"),N.stringify({xhr:D.aa}),{},l("POST")),D.aa=[]))},errors:[]},z=null,J={},W=[["load",y],["beforeunload",m],["pagehide",m],["unload",m]],G=0;G<W.length;G++)N.sh(t,W[G][0],W[G][1],!1);t.addEventListener?N.sh(t,"error",w,!1):t.onerror=function(t,r,e,a,o){if(r||!M){var i=[n(),t,e,a,r==x.URL?"#":r],s=_(t,e,a,o&&o.moduleName);i=i.concat([o&&o.stack,o&&o.moduleName,J[s]?0:1]),J[s]=!0,g(i),j.errors.push(i)}};for(var Z=[["scroll",v],["keypress",v],["click",v],["DOMContentLoaded",d],["readystatechange",h]],G=0;G<Z.length;G++)N.sh(x,Z[G][0],Z[G][1],!1);if(N.wrap(!1,t,"requestAnimationFrame",function(r){return function(){return D.firstPaint=n(),t.requestAnimationFrame=r,r.apply(this,arguments)}}),k)if(k.prototype)N.wrap(!1,k.prototype,"open",S),N.wrap(!1,k.prototype,"send",b);else{N.ie=7;var Q=k;t.XMLHttpRequest=function(){var t=new Q;return N.wrap(!1,t,"open",S),N.wrap(!1,t,"send",b),t}}else t.ActiveXObject&&(N.ie=6)}}(window);</script>
+  <title> 理解 setState 更新异步性 | 两个XJ之家 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">两个XJ之家</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                理解 setState 更新异步性
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-26T11:31:30+08:00" content="2017-03-26">
+              2017-03-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/react/" itemprop="url" rel="index">
+                    <span itemprop="name">react</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、setState-异步性"><a href="#一、setState-异步性" class="headerlink" title="一、setState 异步性"></a>一、setState 异步性</h2><h3 id="官方文档描述"><a href="#官方文档描述" class="headerlink" title="官方文档描述"></a>官方文档描述</h3><p>根据 <strong>官方文档 <a href="https://facebook.github.io/react/docs/state-and-lifecycle.html#state-updates-may-be-asynchronous" target="_blank" rel="external">state-and-lifecycle</a></strong>，有下面这段话：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">State Updates May Be Asynchronous</div><div class="line">React may batch multiple setState() calls into a single update for performance.</div><div class="line">Because this.props and this.state may be updated asynchronously, you should not rely on their values for calculating the next state.</div></pre></td></tr></table></figure>
+<h3 id="异步性示例"><a href="#异步性示例" class="headerlink" title="异步性示例"></a>异步性示例</h3><p>可点击 <a href="http://codepen.io/rocketxujia/pen/BWPdRy" target="_blank" rel="external">CodePen</a>查看，具体代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SelectBox</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(props) &#123;</div><div class="line">    <span class="keyword">super</span>(props);</div><div class="line">    <span class="keyword">this</span>.state=&#123;<span class="attr">value</span>: <span class="string">'initValue'</span>&#125;;</div><div class="line">    <span class="comment">// This binding is necessary to make `this` work in the callback</span></div><div class="line">    <span class="keyword">this</span>.handleChange = <span class="keyword">this</span>.handleChange.bind(<span class="keyword">this</span>);</div><div class="line">    <span class="comment">// console.log(this.handleChange);</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  handleChange (e) &#123;</div><div class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">value</span>: e.target.value&#125;);</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'handleChange: '</span>,<span class="keyword">this</span>.state.value);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  render() &#123;</div><div class="line">      <span class="keyword">return</span>(</div><div class="line">         &lt;div&gt;</div><div class="line">             &lt;select onChange=&#123;<span class="keyword">this</span>.handleChange&#125; value=&#123;<span class="keyword">this</span>.state.value&#125;&gt;</div><div class="line">                &lt;option value=<span class="string">"JavaScript"</span> key=&#123;<span class="number">1</span>&#125;&gt;JavaScript&lt;<span class="regexp">/option&gt;</span></div><div class="line"><span class="regexp">                &lt;option value="Angular2" key=&#123;2&#125;&gt;Angular2&lt;/</span>option&gt;</div><div class="line">                &lt;option value=<span class="string">"React"</span> key=&#123;<span class="number">3</span>&#125;&gt;React&lt;<span class="regexp">/option&gt;</span></div><div class="line"><span class="regexp">             &lt;/</span>select&gt;</div><div class="line">             &lt;h1&gt;&#123;<span class="keyword">this</span>.state.value&#125;&lt;<span class="regexp">/h1&gt;</span></div><div class="line"><span class="regexp">         &lt;/</span>div&gt;</div><div class="line">      );</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">ReactDOM.render(</div><div class="line">  &lt;div&gt;&lt;SelectBox /&gt;&lt;/div&gt;,</div><div class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</div><div class="line">);</div></pre></td></tr></table></figure>
+<p>我们在<code>handleChange</code>方法中，调用<code>setState</code>来更新选项的值，然后在控制台中输出这个值。看起来这两个值应该是同步相同的。但你如果一执行就会发现，在控制台中输出的<code>this.state.value</code>，并不会在执行<code>setState</code>方法后立即就变动。像下面的执行的结果图一样:</p>
+<h2 id="二、怎么解决示例问题"><a href="#二、怎么解决示例问题" class="headerlink" title="二、怎么解决示例问题"></a>二、怎么解决示例问题</h2><h3 id="参照上述官方文档的解决方案为："><a href="#参照上述官方文档的解决方案为：" class="headerlink" title="参照上述官方文档的解决方案为："></a>参照上述官方文档的解决方案为：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">To fix it, use a second form of setState() that accepts a function rather than an object. </div><div class="line">That function will receive the previous state as the first argument, </div><div class="line">and the props at the time the update is applied as the second argument:</div></pre></td></tr></table></figure>
+<p>所以可以修改上述 Demo 如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.setState( </div><div class="line">	&#123;</div><div class="line">		value: e.target.value</div><div class="line">	&#125;, </div><div class="line">	<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; </div><div class="line">		<span class="built_in">console</span>.log(<span class="string">'After setState invoke，this.state.value = '</span>, <span class="keyword">this</span>.state.value); </div><div class="line">	&#125;</div><div class="line">);</div></pre></td></tr></table></figure></p>
+<h3 id="使用-componentDidUpdate"><a href="#使用-componentDidUpdate" class="headerlink" title="使用 componentDidUpdate()"></a>使用 componentDidUpdate()</h3><p>另一个解决方案就是使用这个生命周期方法，把确定state更新后要执行的代码放在里面，如下面的代码:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">componentDidUpdate()&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'After setState invoke，this.state.value = '</span>, <span class="keyword">this</span>.state.value); </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="三、React这么处理的原因"><a href="#三、React这么处理的原因" class="headerlink" title="三、React这么处理的原因"></a>三、React这么处理的原因</h2><p><code>setState这个方法，它在React中的执行行为可以认为&quot;异步的&quot;</code><br>setState方法与包含在其中的执行是一个很复杂的过程。这段程式码从React最初的版本到现在，也有无数次的修改。它的工作除了要更动this.state之外，还要负责触发重新渲染(render)，这里面要经过React核心中diff演算法，最终才能决定是否要进行重渲染，以及如何渲染。而且为了性能的理由，多个setState执行有可能在执行过程中还需要被合并，所以它被设计以异步的或延时的来进行执行是相当合理的。</p>
+<p>那么setState会在何时以同步的方式来执行，也就是立即更动this.state？ 答案是在React库控制之外时，它就会以同步的方式来执行。</p>
+<p>可点击 <a href="http://codepen.io/rocketxujia/pen/mWjpZJ" target="_blank" rel="external">CodePen</a>查看，具体代码如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Demo = React.createClass(&#123;</div><div class="line">  getInitialState: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> (&#123;</div><div class="line">      counter: <span class="number">0</span></div><div class="line">    &#125;);</div><div class="line">  &#125;,</div><div class="line">  componentDidMount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// Automatically update the state every 5 seconds.</span></div><div class="line">    setInterval(<span class="keyword">this</span>.updateState, <span class="number">5000</span>);</div><div class="line">    <span class="comment">// Update the state on mouse-down.</span></div><div class="line">    <span class="comment">// --</span></div><div class="line">    <span class="comment">// <span class="doctag">NOTE:</span> We are implementing our own event binding here - not using the</span></div><div class="line">    <span class="comment">// React Element props to manage the event handler.</span></div><div class="line">    ReactDOM.findDOMNode(<span class="keyword">this</span>)</div><div class="line">      .addEventListener(<span class="string">"mousedown"</span>, <span class="keyword">this</span>.updateState);</div><div class="line">  &#125;,</div><div class="line">  <span class="comment">// I render the component based on the current state.</span></div><div class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      React.DOM.span(&#123;</div><div class="line">          onClick: <span class="keyword">this</span>.updateState,</div><div class="line">          className: <span class="string">"button"</span></div><div class="line">        &#125;,</div><div class="line">        (<span class="string">"Counter at "</span> + <span class="keyword">this</span>.state.counter)</div><div class="line">      )</div><div class="line">    );</div><div class="line">  &#125;,</div><div class="line">  <span class="comment">// I update the state and log the existing state value on either side of</span></div><div class="line">  <span class="comment">// the operation in an attempt to see if the state mutation operation is</span></div><div class="line">  <span class="comment">// synchronous or asynchronous.</span></div><div class="line">  updateState: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"= = = = = = = = = = = ="</span>);</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"EVENT:"</span>, (event ? event.type : <span class="string">"timer"</span>));</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"Pre-setState:"</span>, <span class="keyword">this</span>.state.counter);</div><div class="line">    <span class="keyword">this</span>.setState(&#123;</div><div class="line">      counter: (<span class="keyword">this</span>.state.counter + <span class="number">1</span>)</div><div class="line">    &#125;);</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"Post-setState:"</span>, <span class="keyword">this</span>.state.counter);</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// Render the root Demo and mount it inside the given element.</span></div><div class="line">ReactDOM.render(</div><div class="line">  React.createElement(Demo),</div><div class="line">  <span class="built_in">document</span>.getElementById(<span class="string">"root"</span>)</div><div class="line">);</div></pre></td></tr></table></figure></p>
+<p>从示例中看出, <code>updateState()</code> 被三种方式调用：</p>
+<ul>
+<li>setTimeout() - not managed by ReactJS.</li>
+<li>mousedown - not managed by ReactJS.</li>
+<li>onClick - managed by ReactJS.</li>
+</ul>
+<p>其中一个被React管理的<code>click</code>事件回调方法中的<code>setState</code>是异步的，<br>而另二个我们自定义的，未被React管理的<code>mousedown</code>,及定时器<code>timer</code> 却是同步的。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/react/" rel="tag">#react</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/公司/公司产线发布问题/公司产线发布问题-2017-Q1/" rel="next" title="公司产线发布问题-2017">
+                <i class="fa fa-chevron-left"></i> 公司产线发布问题-2017
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="xujia" />
+          <p class="site-author-name" itemprop="name">xujia</p>
+          <p class="site-description motion-element" itemprop="description">记录前端学习总结</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、setState-异步性"><span class="nav-number">1.</span> <span class="nav-text">一、setState 异步性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#官方文档描述"><span class="nav-number">1.1.</span> <span class="nav-text">官方文档描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步性示例"><span class="nav-number">1.2.</span> <span class="nav-text">异步性示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、怎么解决示例问题"><span class="nav-number">2.</span> <span class="nav-text">二、怎么解决示例问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参照上述官方文档的解决方案为："><span class="nav-number">2.1.</span> <span class="nav-text">参照上述官方文档的解决方案为：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-componentDidUpdate"><span class="nav-number">2.2.</span> <span class="nav-text">使用 componentDidUpdate()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、React这么处理的原因"><span class="nav-number">3.</span> <span class="nav-text">三、React这么处理的原因</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xujia</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
