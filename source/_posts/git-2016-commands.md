@@ -1,8 +1,8 @@
 ---
-title: git常用命令
+title: git 命令
 date: 2016-07-03 23:00:50
 tags: 
-- git
+- git 命令
 categories: 
 - git
 updated:

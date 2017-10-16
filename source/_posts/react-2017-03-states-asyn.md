@@ -5,12 +5,12 @@ date: 2017-03-26 11:31:30
 updated:
 comments:
 tags:
-	- react
+	- state
 categories:
 	- react
 keywords:
 	- react
-	- setState asynchronous
+	- setState 
 ---
 
 ## 一、setState 异步性

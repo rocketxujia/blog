@@ -5,9 +5,10 @@ date: 2016-10-24 09:19:15
 updated:
 comments:
 tags: 
-  - network
+  - MAC 地址
+  - IP 地址
 categories:
-  - network
+  - 网络
 ---
 简单地说：IP地址是ISP互联网服务提供商给你的，MAC地址是你的网卡物理地址。
 

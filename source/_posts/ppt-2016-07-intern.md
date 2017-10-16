@@ -3,8 +3,9 @@ title: 公司校招实习生前端分享
 layout: fasle
 tags:
   - ppt
+  - 实习生前端分享
 categories:
-  - ppt
+  - 公司
 date: 2016-07-13 23:15:21
 updated:
 comments:

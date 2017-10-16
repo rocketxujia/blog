@@ -3,9 +3,9 @@ title: 网络构成设备
 layout: fasle
 date: 2016-10-23 19:13:03
 tags: 
-  - network
+  - 网络构成设备
 categories:
-  - network
+  - 网络
 updated:
 comments:
 ---

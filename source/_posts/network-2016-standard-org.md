@@ -5,9 +5,9 @@ date: 2016-10-23 22:44:36
 updated:
 comments:
 tags: 
-  - network
+  - 互联网五大标准组织
 categories:
-  - network
+  - 网络
 ---
 ## 一、概念
 1. 标准化作用：规范，统一
