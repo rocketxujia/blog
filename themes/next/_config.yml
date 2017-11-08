@@ -29,10 +29,10 @@ canonical: true
 # When running the site in a subdirectory (e.g. domain.tld/blog), remove the leading slash (/archives -> archives)
 menu:
   # home: /
-  # categories: /categories
+  categories: /categories
   tags: /tags
   archives: /archives
-  about: /about
+  # about: /about
   # search: /search
   # commonweal: /404.html
 
