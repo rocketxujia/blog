@@ -2,7 +2,7 @@
 title: hexo 命令
 date: 2016-11-03 23:00:50
 tags: 
-- hexo 命令
+- hexo
 categories: 
 - hexo
 updated: 

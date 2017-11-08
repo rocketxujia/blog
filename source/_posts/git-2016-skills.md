@@ -3,7 +3,7 @@ title: Git的几个提供效率的技巧
 layout: fasle
 date: 2016-07-15 23:22:36
 tags: 
-- git 技巧
+- git 
 categories: 
 - git
 updated:

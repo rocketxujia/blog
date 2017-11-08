@@ -4,7 +4,7 @@ layout: fasle
 date: 2016-07-06 21:24:18
 updated:
 comments:
-tags: 前端技术
+tags: 
 ---
 # 前端大会
 QCon： http://2015.qconshanghai.com/

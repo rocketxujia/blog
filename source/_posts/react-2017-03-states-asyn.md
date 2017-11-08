@@ -5,12 +5,9 @@ date: 2017-03-26 11:31:30
 updated:
 comments:
 tags:
-	- state
+	- react state lifecycle
 categories:
 	- react
-keywords:
-	- react
-	- setState 
 ---
 
 ## 一、setState 异步性

@@ -2,7 +2,7 @@
 title: git 命令
 date: 2016-07-03 23:00:50
 tags: 
-- git 命令
+- git 
 categories: 
 - git
 updated:
